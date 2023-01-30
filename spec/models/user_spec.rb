@@ -95,12 +95,12 @@ RSpec.describe User, type: :model do
       it '姓(カナ)が空では登録できない' do
         @user.last_name_kana = ''
         @user.valid?
-        expect(@user.errors.full_messages).to include("Last name kana is invalid")
+        expect(@user.errors.full_messages).to include("Last name kana can't be blank", "Last name kana is invalid")
       end
       it '名(カナ)が空では登録できない' do
         @user.first_name_kana = ''
         @user.valid?
-        expect(@user.errors.full_messages).to include("First name kana is invalid")
+        expect(@user.errors.full_messages).to include("First name kana can't be blank", "First name kana is invalid")
       end
 
       it '姓(カナ)が全角（カタカナ）でないと登録できない' do
