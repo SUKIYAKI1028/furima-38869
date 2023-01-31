@@ -7,8 +7,10 @@ class Item < ApplicationRecord
   belongs_to :days_to_ship
   belongs_to :user
 
+  has_one_attached :image
+
   with_options presence: true do
-    validates :item_name, :description ,:price
+    validates :item_name, :description ,:price, :image
   end
     
   with_options numericality: { other_than: 1 , message: "can't be blank"} do
