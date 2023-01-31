@@ -6,4 +6,13 @@ class Item < ApplicationRecord
   belongs_to :prefecture
   belongs_to :days_to_ship
   belongs_to :user
+
+  with_options presence: true do
+    validates :item_name, :description ,:price
+  end
+    
+  with_options numericality: { other_than: 1 , message: "can't be blank"} do
+    validates :category_id, :condition_id, :shipping_charge_id, :prefecture_id, :days_to_ship_id
+  end
+
 end
