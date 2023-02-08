@@ -6,7 +6,7 @@ FactoryBot.define do
     block                         { '1-1-1' }
     building                      { 'ダミービル' }
     telephone_number              { '09000000000' }
-    token                         { Faker::Internet.password(min_length: 20, max_length: 30) }
+    token                         {"tok_abcdefghijk00000000000000000"}
     user_id                       { Faker::Number.non_zero_digit }
     item_id                       { Faker::Number.non_zero_digit }
   end
