@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe ItemOrder, type: :model do
   before do
-    @item_order = FactoryBot.build(:item_order)
+    user = FactoryBot.create(:user)
+    item = FactoryBot.create(:item)
+    @item_order = FactoryBot.build(:item_order, user_id: user.id, item_id: item.id)
   end
 
   describe '配送先情報の保存' do
@@ -62,10 +64,35 @@ RSpec.describe ItemOrder, type: :model do
         @item_order.valid?
         expect(@item_order.errors.full_messages).to include("Telephone number can't be blank")
       end
-      it 'telephone_numberが11桁か10桁でなければ購入できない' do
+      it 'telephone_numberが12桁以上では購入できない' do
         @item_order.telephone_number = '080123456789'
         @item_order.valid?
         expect(@item_order.errors.full_messages).to include('Telephone number is invalid')
+      end
+      it 'telephone_numberが9桁以下では購入できない' do
+        @item_order.telephone_number = '080123456'
+        @item_order.valid?
+        expect(@item_order.errors.full_messages).to include('Telephone number is invalid')
+      end
+      it '都道府県に「---」が選択されている場合は購入できない' do
+        @item_order.prefecture_id = 1
+        @item_order.valid?
+        expect(@item_order.errors.full_messages).to include("Prefecture can't be blank")
+      end
+      it '電話番号に半角数字以外が含まれている場合は購入できない' do
+        @item_order.telephone_number = '0８012345678'
+        @item_order.valid?
+        expect(@item_order.errors.full_messages).to include('Telephone number is invalid')
+      end
+      it 'userが紐付いていなければ購入できない' do
+        @item_order.user_id = nil
+        @item_order.valid?
+        expect(@item_order.errors.full_messages).to include("User can't be blank")
+      end
+      it 'itemが紐付いていなければ購入できない' do
+        @item_order.item_id = nil
+        @item_order.valid?
+        expect(@item_order.errors.full_messages).to include("Item can't be blank")
       end
     end
   end
