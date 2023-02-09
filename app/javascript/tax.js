@@ -11,4 +11,4 @@ function tax() {
       profit.innerHTML = Math.floor(saleProfit); 
   });
 }
-window.addEventListener("turbolinks:load", tax);
+window.addEventListener("load", tax);
