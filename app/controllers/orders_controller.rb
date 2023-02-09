@@ -3,13 +3,13 @@ class OrdersController < ApplicationController
   before_action :set_item, only: [:index, :create]
 
   def index
-    if @item.user_id == current_user.id  || 
-     @item.order.present?
+    if @item.user_id == current_user.id ||
+       @item.order.present?
       redirect_to root_path
     end
     @order_address = ItemOrder.new
   end
-  
+
   def create
     @item_order = ItemOrder.new(order_params)
     if @item_order.valid?
