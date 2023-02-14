@@ -16,7 +16,7 @@ class Item < ApplicationRecord
     validates :item_name, :description, :price, :image
   end
 
-  with_options numericality: { other_than: 1, message: "can't be blank" } do
+  with_options numericality: { other_than: 1, message: "を選択してください" } do
     validates :category_id, :condition_id, :shipping_charge_id, :prefecture_id, :days_to_ship_id
   end
 end

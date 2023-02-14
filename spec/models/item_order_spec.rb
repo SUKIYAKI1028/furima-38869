@@ -27,22 +27,22 @@ RSpec.describe ItemOrder, type: :model do
       it '郵便番号が空だと購入ができない' do
         @item_order.postal_code = ''
         @item_order.valid?
-        expect(@item_order.errors.full_messages).to include("Postal code can't be blank")
+        expect(@item_order.errors.full_messages).to include("Postal code は「-」(ハイフン)を入れた半角数字で入力してください")
       end
       it '郵便番号にハイフンがないと登録できない' do
         @item_order.postal_code = '1234567'
         @item_order.valid?
-        expect(@item_order.errors.full_messages).to include('Postal code is invalid. Include hyphen(-)')
+        expect(@item_order.errors.full_messages).to include('Postal code は「-」(ハイフン)を入れた半角数字で入力してください')
       end
       it '郵便番号が8桁出ないと購入できない' do
         @item_order.postal_code = '123-45678'
         @item_order.valid?
-        expect(@item_order.errors.full_messages).to include('Postal code is invalid. Include hyphen(-)')
+        expect(@item_order.errors.full_messages).to include('Postal code は「-」(ハイフン)を入れた半角数字で入力してください')
       end
       it '郵便番号が全角だと購入できない' do
         @item_order.postal_code = '１２３-４５６７'
         @item_order.valid?
-        expect(@item_order.errors.full_messages).to include('Postal code is invalid. Include hyphen(-)')
+        expect(@item_order.errors.full_messages).to include('Postal code は「-」(ハイフン)を入れた半角数字で入力してください')
       end
       it 'prefecture_idが空だと購入できない' do
         @item_order.prefecture_id = nil
@@ -77,7 +77,7 @@ RSpec.describe ItemOrder, type: :model do
       it '都道府県に「---」が選択されている場合は購入できない' do
         @item_order.prefecture_id = 1
         @item_order.valid?
-        expect(@item_order.errors.full_messages).to include("Prefecture can't be blank")
+        expect(@item_order.errors.full_messages).to include("Prefecture を選択してください")
       end
       it '電話番号に半角数字以外が含まれている場合は購入できない' do
         @item_order.telephone_number = '0８012345678'
